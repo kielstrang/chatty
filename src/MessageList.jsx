@@ -7,7 +7,7 @@ class MessageList extends Component {
     messages: PropTypes.arrayOf(PropTypes.object)
   }
   render() {
-    const messageItems = this.props.messages.map(message => <Message username={message.username} content={message.content} />);
+    const messageItems = this.props.messages.map(message => <Message username={message.username} content={message.content} key={message.id}/>);
     return (
       <main className="messages">
         {messageItems}
