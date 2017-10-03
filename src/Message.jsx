@@ -4,7 +4,7 @@ import PropTypes from 'proptypes';
 class Message extends Component {
   static propTypes = {
     username: PropTypes.string,
-    content: PropTypes.content
+    content: PropTypes.string
   }
   render() {
     return (
