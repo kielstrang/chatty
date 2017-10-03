@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'proptypes';
 
 class Message extends Component {
+  static propTypes = {
+    username: PropTypes.string,
+    content: PropTypes.content
+  }
   render() {
     return (
       <div className="message">

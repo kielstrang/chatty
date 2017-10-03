@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'proptypes';
 
 class ChatBar extends Component {
+  static propTypes = {
+    currentUser: PropTypes.object
+  }
   render() {
     return (
       <footer className="chatbar">
