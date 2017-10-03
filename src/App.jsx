@@ -26,13 +26,22 @@ class App extends Component {
   }
 
   addMessage = (message) => {
-    message.id = this.state.nextID;
-    const messages = this.state.messages.concat(message);
-    this.setState({ messages: messages, nextID: this.state.nextID + 1 });
+    // message.id = this.state.nextID;
+    // const messages = this.state.messages.concat(message);
+    // this.setState({ messages: messages, nextID: this.state.nextID + 1 });
+    console.log('Sending message', JSON.stringify(message));
+    this.socket.send(JSON.stringify(message));
   }
 
   changeUser = (name) => {
     this.setState({ currentUser: { name } });
+  }
+
+  componentDidMount() {
+    this.socket = new WebSocket('ws://localhost:3001');
+    this.socket.onopen = () => {
+      console.log('Connected to server');
+    };
   }
 
   render() {
