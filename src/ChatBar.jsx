@@ -4,20 +4,29 @@ import PropTypes from 'proptypes';
 class ChatBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { content: '' };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = { content: '', username: this.props.currentUser.name };
   }
   static propTypes = {
     currentUser: PropTypes.object,
-    addMessage: PropTypes.func
+    addMessage: PropTypes.func,
+    changeUser: PropTypes.func
   }
 
-  handleChange(event) {
+  handleUserChange = (event) => {
+    this.setState({ username: event.target.value });
+  }
+
+  handleUserEnter = (event) => {
+    if(event.key === 'Enter') {
+      this.props.changeUser(this.state.username);
+    }
+  }
+
+  handleMessageChange = (event) => {
     this.setState({ content: event.target.value });
   }
 
-  handleSubmit(event) {
+  handleMessageEnter = (event) => {
     if(event.key === 'Enter') {
       const message = { content: event.target.value, username: this.props.currentUser.name };
       this.props.addMessage(message);
@@ -28,13 +37,15 @@ class ChatBar extends Component {
   render() {
     return (
       <footer className="chatbar">
-        <input className="chatbar-username" defaultValue={this.props.currentUser.name} />
-        <input
-          className="chatbar-message"
+        <input className="chatbar-username"
+          value={this.state.username}
+          onChange={this.handleUserChange}
+          onKeyPress={this.handleUserEnter} />
+        <input className="chatbar-message"
           placeholder="Type a message and hit ENTER"
           value={this.state.content}
-          onChange={this.handleChange}
-          onKeyPress={this.handleSubmit} />
+          onChange={this.handleMessageChange}
+          onKeyPress={this.handleMessageEnter} />
       </footer>
     );
   }

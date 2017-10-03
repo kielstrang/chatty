@@ -7,7 +7,6 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.addMessage = this.addMessage.bind(this);
     this.state = {
       nextID: 4,
       currentUser: { name: 'Bob' }, // optional. if currentUser is not defined, it means the user is Anonymous
@@ -26,10 +25,14 @@ class App extends Component {
     };
   }
 
-  addMessage(message) {
+  addMessage = (message) => {
     message.id = this.state.nextID;
     const messages = this.state.messages.concat(message);
     this.setState({ messages: messages, nextID: this.state.nextID + 1 });
+  }
+
+  changeUser = (name) => {
+    this.setState({ currentUser: { name } });
   }
 
   render() {
@@ -37,7 +40,9 @@ class App extends Component {
       <div>
         <NavBar />
         <MessageList messages={this.state.messages} />
-        <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage} />
+        <ChatBar currentUser={this.state.currentUser}
+          addMessage={this.addMessage}
+          changeUser={this.changeUser} />
       </div>
     );
   }
