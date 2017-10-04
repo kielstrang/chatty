@@ -29,12 +29,10 @@ wss.on('connection', (ws) => {
   console.log('Client connected');
 
   ws.on('message', (messageJSON) => {
-    console.log('message');
     const message = JSON.parse(messageJSON);
     message.id = uuid();
-    console.log('Incoming type:', message.type);
     message.type = responseTypes[message.type];
-    console.log('response type:', message.type);
+    console.log(JSON.stringify(message));
     wss.broadcast(JSON.stringify(message));
   });
 

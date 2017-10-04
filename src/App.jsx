@@ -29,7 +29,6 @@ class App extends Component {
 
     this.socket.onmessage = (event) => {
       const received = JSON.parse(event.data);
-      received.id = this.state.nextID;
       const messages = this.state.messages.concat(received);
       this.setState({ messages: messages, nextID: this.state.nextID + 1 });
     };
