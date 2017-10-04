@@ -16,14 +16,15 @@ class ChatBar extends Component {
     this.setState({ username: event.target.value });
   }
 
+  getNameChangeMessage = () => {
+    const oldName = this.props.currentUser.name || 'Anonymous';
+    const change = this.state.username ? `changed their name to ${this.state.username}` : 'became anonymous';
+    return { content: `${oldName} ${change}` };
+  }
+
   handleUserEnter = (event) => {
     if(event.key === 'Enter') {
-      const previousName =  this.props.currentUser.name || 'Anonymous';
-      const nameChange = this.state.username ?
-      `${previousName} changed their name to ${this.state.username}`:
-      `${previousName} became anonymous`;
-      const message = { content: nameChange, type: 'notification' };
-      this.props.addMessage(message);
+      this.props.addMessage(this.getNameChangeMessage());
       this.props.changeUser(this.state.username);
     }
   }
