@@ -15,7 +15,7 @@ class ChatBar extends Component {
   getNameChangeMessage = () => {
     const oldName = this.props.currentUser.name || 'Anonymous';
     const change = this.state.username ? `changed their name to ${this.state.username}` : 'became anonymous';
-    return { content: `${oldName} ${change}`, type: 'postNotification' };
+    return { content: `${oldName} ${change}`, type: 'postNotification', nameUpdate: this.state.username || 'Anonymous' };
   }
 
   handleUserChange = (event) => {

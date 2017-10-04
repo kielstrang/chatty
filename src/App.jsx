@@ -22,6 +22,11 @@ class App extends Component {
     this.setState({ currentUser: { name } });
   }
 
+  display = (message, displayType) => {
+    message.displayType = displayType;
+    this.setState({ messages: this.state.messages.concat(message) });
+  }
+
   componentDidMount() {
     this.socket = new WebSocket('ws://localhost:3001');
     this.socket.onopen = () => {
@@ -31,13 +36,19 @@ class App extends Component {
     this.socket.onmessage = (event) => {
       const received = JSON.parse(event.data);
       switch(received.type) {
-        case 'incomingMessage':
+        case 'incomingMessage': {
+          this.display(received, 'message');
+          break;
+        }
         case 'incomingNotification': {
-          this.setState({ messages: this.state.messages.concat(received) });
+          this.display(received, 'notification');
           break;
         }
         case 'connectionUpdate': {
           this.setState({ userCount: received.userCount });
+          if(received.content) {
+            this.display(received, 'notification');
+          }
           break;
         }
         default: {

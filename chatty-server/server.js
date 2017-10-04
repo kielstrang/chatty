@@ -23,23 +23,21 @@ wss.broadcast = function broadcast(data) {
   });
 };
 
-let userCount = 0;
-
 wss.on('connection', (ws) => {
-  userCount += 1;
-  console.log(`Client connected: ${userCount} active`);
-  wss.broadcast(JSON.stringify({ id: uuid(), type: 'connectionUpdate', userCount }));
+  ws.name = 'Anonymous';
+  console.log(`Client connected: ${wss.clients.size} active`);
+  wss.broadcast(JSON.stringify({ id: uuid(), type: 'connectionUpdate', userCount: wss.clients.size, content: `${ws.name} connected`  }));
 
   ws.on('message', (messageJSON) => {
     const message = JSON.parse(messageJSON);
     message.id = uuid();
     message.type = responseTypes[message.type];
+    ws.name = message.nameUpdate || ws.name;
     wss.broadcast(JSON.stringify(message));
   });
 
   ws.on('close', () => {
-    userCount -= 1;
-    console.log(`Client disconnected: ${userCount} active`);
-    wss.broadcast(JSON.stringify({ id: uuid(), type: 'connectionUpdate', userCount }));
+    console.log(`Client disconnected: ${wss.clients.size} active`);
+    wss.broadcast(JSON.stringify({ id: uuid(), type: 'connectionUpdate', userCount: wss.clients.size, content: `${ws.name} disconnected` }));
   });
 });
