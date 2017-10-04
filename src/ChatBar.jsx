@@ -18,6 +18,12 @@ class ChatBar extends Component {
 
   handleUserEnter = (event) => {
     if(event.key === 'Enter') {
+      const previousName =  this.props.currentUser.name || 'Anonymous';
+      const nameChange = this.state.username ?
+      `${previousName} changed their name to ${this.state.username}`:
+      `${previousName} became anonymous`;
+      const message = { content: nameChange, type: 'notification' };
+      this.props.addMessage(message);
       this.props.changeUser(this.state.username);
     }
   }
@@ -28,7 +34,7 @@ class ChatBar extends Component {
 
   handleMessageEnter = (event) => {
     if(event.key === 'Enter') {
-      const message = { content: event.target.value, username: this.props.currentUser.name };
+      const message = { content: event.target.value, username: this.props.currentUser.name || 'Anonymous', type: 'message' };
       this.props.addMessage(message);
       this.setState({ content: '' });
     }
