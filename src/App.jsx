@@ -8,22 +8,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nextID: 4,
-      currentUser: { name: 'Bob' }, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: [
-        {
-          id: 1,
-          username: 'Bob',
-          content: 'Has anyone seen my marbles?',
-          type: 'message'
-        },
-        {
-          id: 2,
-          username: 'Anonymous',
-          content: 'No, I think you lost them. You lost your marbles Bob. You lost them for good.',
-          type: 'message'
-        }
-      ]
+      currentUser: { name: '' }, // optional. if currentUser is not defined, it means the user is Anonymous
+      messages: []
     };
   }
 
