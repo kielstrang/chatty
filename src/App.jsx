@@ -9,7 +9,8 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: { name: '' }, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: []
+      messages: [],
+      userCount: 0
     };
   }
 
@@ -29,15 +30,27 @@ class App extends Component {
 
     this.socket.onmessage = (event) => {
       const received = JSON.parse(event.data);
-      const messages = this.state.messages.concat(received);
-      this.setState({ messages: messages, nextID: this.state.nextID + 1 });
+      switch(received.type) {
+        case 'incomingMessage':
+        case 'incomingNotification': {
+          this.setState({ messages: this.state.messages.concat(received) });
+          break;
+        }
+        case 'connectionUpdate': {
+          this.setState({ userCount: received.userCount });
+          break;
+        }
+        default: {
+          console.error('Unknown message type:', received.type);
+        }
+      }
     };
   }
 
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar userCount={this.state.userCount} />
         <MessageList messages={this.state.messages} />
         <ChatBar currentUser={this.state.currentUser}
           addMessage={this.addMessage}

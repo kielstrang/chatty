@@ -1,5 +1,3 @@
-// server.js
-
 const express = require('express');
 const WebSocket = require('ws');
 const uuid = require('uuid/v1');
@@ -19,22 +17,29 @@ const wss = new WebSocket.Server({ server });
 
 wss.broadcast = function broadcast(data) {
   wss.clients.forEach(function each(client) {
-    if (client.readyState === WebSocket.OPEN) {
+    if(client.readyState === WebSocket.OPEN) {
       client.send(data);
     }
   });
 };
 
+let userCount = 0;
+
 wss.on('connection', (ws) => {
-  console.log('Client connected');
+  userCount += 1;
+  console.log(`Client connected: ${userCount} active`);
+  wss.broadcast(JSON.stringify({ id: uuid(), type: 'connectionUpdate', userCount }));
 
   ws.on('message', (messageJSON) => {
     const message = JSON.parse(messageJSON);
     message.id = uuid();
     message.type = responseTypes[message.type];
-    console.log(JSON.stringify(message));
     wss.broadcast(JSON.stringify(message));
   });
 
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => {
+    userCount -= 1;
+    console.log(`Client disconnected: ${userCount} active`);
+    wss.broadcast(JSON.stringify({ id: uuid(), type: 'connectionUpdate', userCount }));
+  });
 });
