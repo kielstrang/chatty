@@ -7,14 +7,15 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.userColors = ['#C80000', '#FF8000', '#FCCB00', '#008B02', '#00ADFF', '#004DCF', '#8600EB', '#C000C0'];
-    const randomColor = this.userColors[Math.floor(Math.random() * this.userColors.length)];
+    const randomColor = App.userColors[Math.floor(Math.random() * App.userColors.length)];
     this.state = {
       currentUser: { name: '', color: randomColor }, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],
       userCount: 0
     };
   }
+
+  static userColors = ['#C80000', '#FF8000', '#FCCB00', '#008B02', '#00ADFF', '#004DCF', '#8600EB', '#C000C0'];
 
   addMessage = (message) => {
     this.socket.send(JSON.stringify(message));
@@ -71,7 +72,7 @@ class App extends Component {
         <MessageList messages={this.state.messages} />
         <ChatBar username={this.state.currentUser.name}
           color={this.state.currentUser.color}
-          userColors={this.userColors}
+          userColors={App.userColors}
           addMessage={this.addMessage}
           changeUser={this.changeUser}
           changeColor={this.changeColor} />

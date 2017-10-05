@@ -10,7 +10,7 @@ class ChatBar extends Component {
   static propTypes = {
     username: PropTypes.string,
     color: PropTypes.string,
-    userColors: PropTypes.object,
+    userColors: PropTypes.array,
     addMessage: PropTypes.func,
     changeUser: PropTypes.func,
     changeColor: PropTypes.func
