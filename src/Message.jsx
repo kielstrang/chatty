@@ -8,20 +8,37 @@ class Message extends Component {
     color: PropTypes.string
   }
 
-  isImageURL(content) {
-    const urlRegex = /^http[s]?:\/\/[^ "]+.(png|jpg|gif)/;
-    return urlRegex.test(content);
+  replaceURLs(content) {
+    const url = /\b(http[s]?:\/\/[^ "]+)/;
+    const imgURL = /\bhttp[s]?:\/\/[^ "]+.(png|jpg|gif)/;
+    const splitURLs = content.split(url);
+    const images = [];
+    return <div>
+      {
+        splitURLs.map((str, index) => {
+          if(str.match(url)) {
+            if(str.match(imgURL)) {
+              images.push(str);
+            }
+            return <a href={str} key={index}>{str}</a>;
+          }
+          return str;
+        })
+      }
+      {
+        images.map((image, index) => {
+          return <img className="message-image" src={image} key={index} />;
+        })
+      }
+    </div>;
   }
 
   render() {
     const style = { color: this.props.color || 'black' };
-    console.log('Image?', this.isImageURL(this.props.content));
     return (
       <div className="message">
         <span className="message-username" style={style}>{this.props.username}</span>
-        {this.isImageURL(this.props.content) ?
-          <span className="message-content"><img className="message-image" src={this.props.content} /></span> :
-          <span className="message-content">{this.props.content}</span>}
+        <span className="message-content">{this.replaceURLs(this.props.content)}</span>
       </div>
     );
   }
