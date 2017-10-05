@@ -6,6 +6,7 @@ class ChatBar extends Component {
   constructor(props) {
     super(props);
     this.state = { content: '', username: this.props.username, color: this.props.color };
+    this.colorList = ['#C80000', '#FF8000', '#FCCB00', '#008B02', '#00ADFF', '#004DCF', '#8600EB', '#C000C0']
   }
   static propTypes = {
     currentUser: PropTypes.object,
@@ -46,7 +47,7 @@ class ChatBar extends Component {
   render() {
     return (
       <footer className="chatbar" style={{ background: this.props.color }}>
-        <GithubPicker color={this.state.color} onChange={this.props.changeColor} triangle='hide'/>
+        <GithubPicker color={this.state.color} onChange={this.props.changeColor} triangle='hide' colors={this.colorList} />
         <input className="chatbar-username"
           placeholder="Enter your name"
           value={this.state.username}

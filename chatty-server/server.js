@@ -25,7 +25,7 @@ wss.broadcast = function broadcast(data) {
 
 wss.on('connection', (ws) => {
   ws.name = 'Anonymous';
-  ws.color = '#66ccff';
+  ws.color = '#000000';
   console.log(`Client connected: ${wss.clients.size} active`);
   wss.broadcast(JSON.stringify({ id: uuid(), type: 'connectionUpdate', userCount: wss.clients.size, content: `${ws.name} connected`  }));
 
