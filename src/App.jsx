@@ -8,7 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: { name: '' }, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: { name: '', color: 'orange' }, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],
       userCount: 0
     };
@@ -20,6 +20,11 @@ class App extends Component {
 
   changeUser = (name) => {
     this.setState({ currentUser: { name } });
+  }
+
+  changeColor = (color) => {
+    console.log('color');
+    this.setState({ currentUser: { color } });
   }
 
   display = (message, displayType) => {
@@ -61,11 +66,12 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar userCount={this.state.userCount} />
+        <NavBar userCount={this.state.userCount} color={this.state.currentUser.color}/>
         <MessageList messages={this.state.messages} />
         <ChatBar currentUser={this.state.currentUser}
           addMessage={this.addMessage}
-          changeUser={this.changeUser} />
+          changeUser={this.changeUser}
+          changeColor={this.changeColor}  />
       </div>
     );
   }

@@ -4,12 +4,14 @@ import PropTypes from 'proptypes';
 class Message extends Component {
   static propTypes = {
     username: PropTypes.string,
-    content: PropTypes.string
+    content: PropTypes.string,
+    userColor: PropTypes.string
   }
   render() {
+    const style = { color: this.props.color || 'black'};
     return (
       <div className="message">
-        <span className="message-username">{this.props.username}</span>
+        <span className="message-username" style={style}>{this.props.username}</span>
         <span className="message-content">{this.props.content}</span>
       </div>
     );

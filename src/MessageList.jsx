@@ -9,7 +9,7 @@ class MessageList extends Component {
   }
   render() {
     const messageItems = this.props.messages.map(message => {
-      if(message.displayType === 'message') return <Message username={message.username} content={message.content} key={message.id} />;
+      if(message.displayType === 'message') return <Message username={message.username} content={message.content} color={message.color} key={message.id} />;
       if(message.displayType === 'notification') return <Notification content={message.content} key={message.id} />;
       throw new Error(`Could not display type ${message.displayType}`);
     });

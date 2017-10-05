@@ -4,12 +4,13 @@ import PropTypes from 'proptypes';
 class ChatBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { content: '', username: this.props.currentUser.name };
+    this.state = { content: '', username: this.props.currentUser.name, color: this.props.currentUser.color };
   }
   static propTypes = {
     currentUser: PropTypes.object,
     addMessage: PropTypes.func,
-    changeUser: PropTypes.func
+    changeUser: PropTypes.func,
+    changeColor: PropTypes.func
   }
 
   getNameChangeMessage = () => {
@@ -35,7 +36,7 @@ class ChatBar extends Component {
 
   handleMessageEnter = (event) => {
     if(event.key === 'Enter') {
-      const message = { content: event.target.value, username: this.props.currentUser.name || 'Anonymous', type: 'postMessage' };
+      const message = { content: event.target.value, username: this.props.currentUser.name || 'Anonymous', type: 'postMessage', color: this.state.color };
       this.props.addMessage(message);
       this.setState({ content: '' });
     }
@@ -43,12 +44,14 @@ class ChatBar extends Component {
 
   render() {
     return (
-      <footer className="chatbar">
+      <footer className="chatbar"
+        style={{ background: this.state.color }}>
         <input className="chatbar-username"
           placeholder="Enter your name"
           value={this.state.username}
           onChange={this.handleUserChange}
-          onKeyPress={this.handleUserEnter} />
+          onKeyPress={this.handleUserEnter}
+        />
         <input className="chatbar-message"
           placeholder="Type a message and hit ENTER"
           value={this.state.content}
