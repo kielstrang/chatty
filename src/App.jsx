@@ -8,7 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: { name: '', color: 'orange' }, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: { name: '', color: '#FF8000' }, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],
       userCount: 0
     };

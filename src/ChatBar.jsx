@@ -9,7 +9,8 @@ class ChatBar extends Component {
     this.colorList = ['#C80000', '#FF8000', '#FCCB00', '#008B02', '#00ADFF', '#004DCF', '#8600EB', '#C000C0']
   }
   static propTypes = {
-    currentUser: PropTypes.object,
+    username: PropTypes.string,
+    color: PropTypes.string,
     addMessage: PropTypes.func,
     changeUser: PropTypes.func,
     changeColor: PropTypes.func
