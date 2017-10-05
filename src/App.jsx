@@ -44,24 +44,20 @@ class App extends Component {
     this.socket.onmessage = (event) => {
       const received = JSON.parse(event.data);
       switch(received.type) {
-        case 'incomingMessage': {
-          this.display(received, 'message');
-          break;
-        }
-        case 'incomingNotification': {
+      case 'incomingMessage':
+        this.display(received, 'message');
+        break;
+      case 'incomingNotification':
+        this.display(received, 'notification');
+        break;
+      case 'connectionUpdate':
+        this.setState({ userCount: received.userCount });
+        if(received.content) {
           this.display(received, 'notification');
-          break;
         }
-        case 'connectionUpdate': {
-          this.setState({ userCount: received.userCount });
-          if(received.content) {
-            this.display(received, 'notification');
-          }
-          break;
-        }
-        default: {
-          console.error('Unknown message type:', received.type);
-        }
+        break;
+      default:
+        console.error('Unknown message type:', received.type);
       }
     };
   }

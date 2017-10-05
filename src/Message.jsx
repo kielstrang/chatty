@@ -8,16 +8,21 @@ class Message extends Component {
     color: PropTypes.string
   }
 
-  replaceURLs(content) {
-    const url = /\b(http[s]?:\/\/[^ "]+)/;
-    const imgURL = /\bhttp[s]?:\/\/[^ "]+.(png|jpg|gif)/;
-    const splitURLs = content.split(url);
+  parseURLs(content) {
+    //replace image URLs with the image
+    const isImageURL = /^http[s]?:\/\/[^ "]+.(png|jpg|gif)/;
+    if(isImageURL.test(content)) {
+      return <img className="message-image" src={content} />;
+    }
+
+    //convert URLs within a message to links
+    const isURL = /\b(http[s]?:\/\/[^ "]+)/;
     const images = [];
     return <div>
       {
-        splitURLs.map((str, index) => {
-          if(str.match(url)) {
-            if(str.match(imgURL)) {
+        content.split(isURL).map((str, index) => {
+          if(str.match(isURL)) {
+            if(isImageURL.test(str)) {
               images.push(str);
             }
             return <a href={str} key={index}>{str}</a>;
@@ -38,7 +43,7 @@ class Message extends Component {
     return (
       <div className="message">
         <span className="message-username" style={style}>{this.props.username}</span>
-        <span className="message-content">{this.replaceURLs(this.props.content)}</span>
+        <span className="message-content">{this.parseURLs(this.props.content)}</span>
       </div>
     );
   }
