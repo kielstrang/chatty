@@ -7,8 +7,10 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+    this.userColors = ['#C80000', '#FF8000', '#FCCB00', '#008B02', '#00ADFF', '#004DCF', '#8600EB', '#C000C0'];
+    const randomColor = this.userColors[Math.floor(Math.random() * this.userColors.length)];
     this.state = {
-      currentUser: { name: '', color: '#FF8000' }, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: { name: '', color: randomColor }, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],
       userCount: 0
     };
@@ -69,6 +71,7 @@ class App extends Component {
         <MessageList messages={this.state.messages} />
         <ChatBar username={this.state.currentUser.name}
           color={this.state.currentUser.color}
+          userColors={this.userColors}
           addMessage={this.addMessage}
           changeUser={this.changeUser}
           changeColor={this.changeColor} />
