@@ -19,12 +19,15 @@ class App extends Component {
   }
 
   changeUser = (name) => {
-    this.setState({ currentUser: { name } });
+    const currentUser = this.state.currentUser;
+    currentUser.name = name;
+    this.setState({ currentUser });
   }
 
-  changeColor = (color) => {
-    console.log('color');
-    this.setState({ currentUser: { color } });
+  changeColor = ({ hex }) => {
+    const currentUser = this.state.currentUser;
+    currentUser.color = hex;
+    this.setState({ currentUser });
   }
 
   display = (message, displayType) => {
@@ -66,12 +69,13 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar userCount={this.state.userCount} color={this.state.currentUser.color}/>
+        <NavBar userCount={this.state.userCount} color={this.state.currentUser.color} />
         <MessageList messages={this.state.messages} />
-        <ChatBar currentUser={this.state.currentUser}
+        <ChatBar username={this.state.currentUser.name}
+          color={this.state.currentUser.color}
           addMessage={this.addMessage}
           changeUser={this.changeUser}
-          changeColor={this.changeColor}  />
+          changeColor={this.changeColor} />
       </div>
     );
   }

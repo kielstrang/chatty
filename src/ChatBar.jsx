@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'proptypes';
+import { GithubPicker } from 'react-color';
 
 class ChatBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { content: '', username: this.props.currentUser.name, color: this.props.currentUser.color };
+    this.state = { content: '', username: this.props.username, color: this.props.color };
   }
   static propTypes = {
     currentUser: PropTypes.object,
@@ -14,7 +15,7 @@ class ChatBar extends Component {
   }
 
   getNameChangeMessage = () => {
-    const oldName = this.props.currentUser.name || 'Anonymous';
+    const oldName = this.props.username || 'Anonymous';
     const change = this.state.username ? `changed their name to ${this.state.username}` : 'became anonymous';
     return { content: `${oldName} ${change}`, type: 'postNotification', nameUpdate: this.state.username || 'Anonymous' };
   }
@@ -36,7 +37,7 @@ class ChatBar extends Component {
 
   handleMessageEnter = (event) => {
     if(event.key === 'Enter') {
-      const message = { content: event.target.value, username: this.props.currentUser.name || 'Anonymous', type: 'postMessage', color: this.state.color };
+      const message = { content: event.target.value, username: this.props.username || 'Anonymous', type: 'postMessage', color: this.props.color };
       this.props.addMessage(message);
       this.setState({ content: '' });
     }
@@ -44,8 +45,8 @@ class ChatBar extends Component {
 
   render() {
     return (
-      <footer className="chatbar"
-        style={{ background: this.state.color }}>
+      <footer className="chatbar" style={{ background: this.props.color }}>
+        <GithubPicker color={this.state.color} onChange={this.props.changeColor} triangle='hide'/>
         <input className="chatbar-username"
           placeholder="Enter your name"
           value={this.state.username}
