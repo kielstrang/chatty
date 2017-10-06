@@ -25,13 +25,13 @@ chatty-server/server.js
 ### Usage
 
 Messages sent by any user will be displayed on all connected clients, allowing conversations.
-["Chatty"](https://github.com/kielstrang/chatty/blob/master/docs/Chatty.png)
+!["Chatty"](https://github.com/kielstrang/chatty/blob/master/docs/Chatty.png)
 
 Users can choose their name and colour.
-["Chatty: Names"](https://github.com/kielstrang/chatty/blob/master/docs/ChattyNames.png)
+!["Chatty: Names"](https://github.com/kielstrang/chatty/blob/master/docs/ChattyNames.png)
 
 URLs in messages are clickable, and image links will display the image in the message.
-["Chatty: Images"](https://github.com/kielstrang/chatty/blob/master/docs/ChattyImages.png)
+!["Chatty: Images"](https://github.com/kielstrang/chatty/blob/master/docs/ChattyImages.png)
 
 
 ### Dependencies
